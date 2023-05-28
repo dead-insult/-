@@ -10,6 +10,7 @@ game_height = 500
 snake_item = 20
 snake_color1 = "red"
 snake_color2 = "yellow"
+speed_sneak = 0.15
 
 
 virtual_game_x = game_width // snake_item
@@ -29,6 +30,10 @@ present_color2 = "black"
 presents_list = []
 presents_size = 25
 
+
+def get_speed(s):
+    global speed_sneak
+    speed_sneak = s
 def create_window():
     global canvas, tk, text
     tk = Tk()
@@ -73,7 +78,7 @@ def check_can_we_delete_snake_item():
 
 # Проверка яблока
 def check_if_we_found_present():
-    global snake_size
+    global snake_size, sneak_score, text
     for i in range(len(presents_list)):
         if presents_list[i][0] == snake_x and presents_list[i][1] == snake_y:
             snake_size = snake_size + 1
@@ -157,6 +162,17 @@ def restart():
     presents_list = []
     main()
 
+def start_main():
+    root = Tk()
+    root.title("Sneak")
+
+    Label(font="Arial 20", text="Sneak", width=20, height=3).pack()
+    but1 = Button(text="Simple", width=20, command=root.destroy)
+    but2 = Button(text="Difficult", width=20, command=root.destroy)
+    but1.pack()
+    but2.pack()
+    root.mainloop()
+
 def main():
     global snake_x, snake_y, root
 
@@ -165,14 +181,14 @@ def main():
     while Game_Running:
         check_can_we_delete_snake_item()
         check_if_we_found_present()
+        score()
         check_if_borders()
         check_we_touch_self(snake_x + snake_x_nav, snake_y + snake_y_nav)
         snake_x = snake_x + snake_x_nav
         snake_y = snake_y + snake_y_nav
         snake_paint_item(canvas, snake_x, snake_y)
-        score()
         tk.update()
-        time.sleep(0.15)
+        time.sleep(speed_sneak)
 
     tk.destroy()
 
