@@ -162,17 +162,6 @@ def restart():
     presents_list = []
     main()
 
-def start_main():
-    root = Tk()
-    root.title("Sneak")
-
-    Label(font="Arial 20", text="Sneak", width=20, height=3).pack()
-    but1 = Button(text="Simple", width=20, command=root.destroy)
-    but2 = Button(text="Difficult", width=20, command=root.destroy)
-    but1.pack()
-    but2.pack()
-    root.mainloop()
-
 def main():
     global snake_x, snake_y, root
 
